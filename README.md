@@ -1,4 +1,4 @@
-# Lookahead Exploration with Neural Radiance Representation for Continuous Vision-Language Navigation
+### Lookahead Exploration with Neural Radiance Representation for Continuous Vision-Language Navigation
 
 ### Zihan Wang, Xiangyang Li, Jiahao Yang, Yeqi Liu, Junjie Hu, Ming Jiang and Shuqiang Jiang
 
