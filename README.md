@@ -1,6 +1,6 @@
-## Lookahead Exploration with Neural Radiance Representation for Continuous Vision-Language Navigation
+### Lookahead Exploration with Neural Radiance Representation for Continuous Vision-Language Navigation
 
-### Zihan Wang, Xiangyang Li, Jiahao Yang, Yeqi Liu, Junjie Hu, Ming Jiang and Shuqiang Jiang
+#### Zihan Wang, Xiangyang Li, Jiahao Yang, Yeqi Liu, Junjie Hu, Ming Jiang and Shuqiang Jiang
 
 
 >Vision-and-language navigation (VLN) enables the agent to navigate to a remote location following the natural language instruction in 3D environments. At each navigation step, the agent selects from possible candidate locations and then makes the move. For better navigation planning, the lookahead exploration strategy aims to effectively evaluate the agent's next action by accurately anticipating the future environment of candidate locations.
