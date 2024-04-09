@@ -20,13 +20,13 @@ To this end, some existing works predict RGB images for future environments, whi
 
 1. Install `Habitat simulator`: follow instructions from [ETPNav](https://github.com/MarSaKi/ETPNav) and [VLN-CE](https://github.com/jacobkrantz/VLN-CE).
 2. Download the `Habitat-Matterport 3D Research Dataset (HM3D)` from [habitat-matterport-3dresearch](https://github.com/matterport/habitat-matterport-3dresearch)
-  * hm3d-train-habitat-v0.2.tar
-  * hm3d-val-habitat-v0.2.tar
+  emsp;&emsp;* hm3d-train-habitat-v0.2.tar
+  emsp;&emsp;* hm3d-val-habitat-v0.2.tar
 
 3. Download annotations (PointNav, VLN-CE) and trained models from [Baidu Netdisk](https://pan.baidu.com/s/1Q511rG-_mJZxufGm4UbAWw?pwd=ih5n).
 4. Download pre-trained `waypoint predictor`:
-  * For R2R-CE, `data/wp_pred/check_cwp_bestdist_hfov90` [[link]](https://drive.google.com/file/d/1goXbgLP2om9LsEQZ5XvB0UpGK4A5SGJC/view?usp=sharing).
-  * For RxR-CE, `data/wp_pred/check_cwp_bestdist_hfov63` [[link]](https://drive.google.com/file/d/1LxhXkise-H96yMMrTPIT6b2AGjSjqqg0/view?usp=sharing).
+  emsp;&emsp;* For R2R-CE, `data/wp_pred/check_cwp_bestdist_hfov90` [[link]](https://drive.google.com/file/d/1goXbgLP2om9LsEQZ5XvB0UpGK4A5SGJC/view?usp=sharing).
+  emsp;&emsp;* For RxR-CE, `data/wp_pred/check_cwp_bestdist_hfov63` [[link]](https://drive.google.com/file/d/1LxhXkise-H96yMMrTPIT6b2AGjSjqqg0/view?usp=sharing).
     
 5. Install `torch_kdtree` for K-nearest feature search from [torch_kdtree](https://github.com/thomgrand/torch_kdtree).
 6. Install `tinycudann` for faster multi-layer perceptrons (MLPs) from [tiny-cuda-nn](https://github.com/NVlabs/tiny-cuda-nn).
