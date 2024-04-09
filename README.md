@@ -32,8 +32,8 @@ hm3d-val-habitat-v0.2.tar
 ## Citation
 
 ```bibtex
-@article{wang2024lookahead,
-  title={Lookahead Exploration with Neural Radiance Representation for Continuous Vision-Language Navigation},
+@inproceedings{wang2024lookahead,
+ title={Lookahead Exploration with Neural Radiance Representation for Continuous Vision-Language Navigation},
   author={Wang, Zihan and Li, Xiangyang and Yang, Jiahao and Liu, Yeqi and Hu, Junjie and Jiang, Ming and Jiang, Shuqiang},
   booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
   year={2024}
