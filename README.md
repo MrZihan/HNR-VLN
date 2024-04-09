@@ -24,7 +24,7 @@ To this end, some existing works predict RGB images for future environments, whi
 hm3d-train-habitat-v0.2.tar
 hm3d-val-habitat-v0.2.tar
 ```
-3. Download annotations(PointNav, VLN-CE) and trained models from [Baidu Netdisk](https://pan.baidu.com/s/1jRshMRNAhIx4VtCT0Lw1DA?pwd=beya).
+3. Download annotations(PointNav, VLN-CE) and trained models from [Baidu Netdisk](https://pan.baidu.com/s/1Q511rG-_mJZxufGm4UbAWw?pwd=ih5n).
 4. Install `torch_kdtree` for K-nearest feature search from [torch_kdtree](https://github.com/thomgrand/torch_kdtree).
 5. Install `tinycudann` for faster multi-layer perceptrons (MLPs) from [tiny-cuda-nn](https://github.com/NVlabs/tiny-cuda-nn).
 
