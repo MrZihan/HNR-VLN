@@ -7,3 +7,23 @@
 To this end, some existing works predict RGB images for future environments, while this strategy suffers from image distortion and high computational cost. To address these issues, we propose the pre-trained hierarchical neural radiance representation model (HNR) to produce multi-level semantic features for future environments, which are more robust and efficient than pixel-wise RGB reconstruction. Furthermore, with the predicted future environmental representations, our lookahead VLN model is able to construct the navigable future path tree and select the optimal path branch via efficient parallel evaluation. Extensive experiments on the VLN-CE datasets confirm the effectiveness of our method.
 
 ![image](https://github.com/MrZihan/HNR-VLN/blob/main/demo.gif)
+
+## TODOs
+
+* [X] Release the pre-training code of the Hierarchical Neural Radiance Representation Model.
+* [X] Release the checkpoints of the Hierarchical Neural Radiance Representation Model.
+* [ ] Tidy the pre-training code for easy execution.
+* [ ] Release the fine-tuning code of the Lookahead VLN Model.
+* [ ] Release the checkpoints of the Lookahead VLN Model.
+
+## Requirements
+
+1. Install `Habitat simulator`: follow instructions [ETPNav](https://github.com/MarSaKi/ETPNav) and [VLN-CE](https://github.com/jacobkrantz/VLN-CE).
+2. Download the `Habitat-Matterport 3D Research Dataset (HM3D)` from [habitat-matterport-3dresearch](https://github.com/matterport/habitat-matterport-3dresearch)
+``` Necessary Files
+hm3d-train-habitat-v0.2.tar
+hm3d-val-habitat-v0.2.tar
+```
+3. Download annotations(PointNav, VLN-CE) and trained models from [Baidu Netdisk](https://pan.baidu.com/s/1jRshMRNAhIx4VtCT0Lw1DA?pwd=beya).
+4. Install `torch_kdtree` for K-nearest feature search from [torch_kdtree](https://github.com/thomgrand/torch_kdtree).
+5. Install `tinycudann` for faster multi-layer perceptrons (MLPs) from [tiny-cuda-nn](https://github.com/NVlabs/tiny-cuda-nn).
