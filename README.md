@@ -18,7 +18,7 @@ To this end, some existing works predict RGB images for future environments, whi
 
 ## Requirements
 
-1. Install `Habitat simulator`: follow instructions [ETPNav](https://github.com/MarSaKi/ETPNav) and [VLN-CE](https://github.com/jacobkrantz/VLN-CE).
+1. Install `Habitat simulator`: follow instructions from [ETPNav](https://github.com/MarSaKi/ETPNav) and [VLN-CE](https://github.com/jacobkrantz/VLN-CE).
 2. Download the `Habitat-Matterport 3D Research Dataset (HM3D)` from [habitat-matterport-3dresearch](https://github.com/matterport/habitat-matterport-3dresearch)
 ``` Necessary Files
 hm3d-train-habitat-v0.2.tar
