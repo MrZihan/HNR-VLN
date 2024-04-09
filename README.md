@@ -27,3 +27,18 @@ hm3d-val-habitat-v0.2.tar
 3. Download annotations(PointNav, VLN-CE) and trained models from [Baidu Netdisk](https://pan.baidu.com/s/1jRshMRNAhIx4VtCT0Lw1DA?pwd=beya).
 4. Install `torch_kdtree` for K-nearest feature search from [torch_kdtree](https://github.com/thomgrand/torch_kdtree).
 5. Install `tinycudann` for faster multi-layer perceptrons (MLPs) from [tiny-cuda-nn](https://github.com/NVlabs/tiny-cuda-nn).
+
+
+## Citation
+
+```bibtex
+@article{wang2024lookahead,
+  title={Lookahead Exploration with Neural Radiance Representation for Continuous Vision-Language Navigation},
+  author={Wang, Zihan and Li, Xiangyang and Yang, Jiahao and Liu, Yeqi and Hu, Junjie and Jiang, Ming and Jiang, Shuqiang},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2024}
+}
+  ```
+
+## Acknowledgments
+Our code is based on [ETPNav](https://github.com/MarSaKi/ETPNav), [nerf-pytorch](https://github.com/yenchenlin/nerf-pytorch) and [torch_kdtree](https://github.com/thomgrand/torch_kdtree). Thanks for their great works!
