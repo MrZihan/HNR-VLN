@@ -29,6 +29,11 @@ To this end, some existing works predict RGB images for future environments, whi
 6. Install `torch_kdtree` for K-nearest feature search from [torch_kdtree](https://github.com/thomgrand/torch_kdtree).
 7. Install `tinycudann` for faster multi-layer perceptrons (MLPs) from [tiny-cuda-nn](https://github.com/NVlabs/tiny-cuda-nn).
 
+## Pre-train the HNR model
+
+   ```
+   bash run_r2r/nerf.bash train 2345
+   ```
 
 ## Citation
 
