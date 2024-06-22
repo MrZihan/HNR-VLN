@@ -35,6 +35,9 @@ To this end, some existing works predict RGB images for future environments, whi
    bash run_r2r/nerf.bash train 2345
    ```
 
+## Issues
+For training speed, see [Issue#7](https://github.com/MrZihan/HNR-VLN/issues/7)
+
 ## Citation
 
 ```bibtex
