@@ -24,7 +24,7 @@ To this end, some existing works predict RGB images for future environments, whi
    hm3d-train-habitat-v0.2.tar
    hm3d-val-habitat-v0.2.tar
    ```
-4. Download annotations (PointNav, VLN-CE) and trained models from [Baidu Netdisk](https://pan.baidu.com/s/1Q511rG-_mJZxufGm4UbAWw?pwd=ih5n).
+4. Download annotations (PointNav, VLN-CE) and trained models from [Baidu Netdisk](https://pan.baidu.com/s/1Q511rG-_mJZxufGm4UbAWw?pwd=ih5n) or [TeraBox](https://terabox.com/s/1nSATHQT1b1Cl8HqgEAIHrQ).
 5. Download pre-trained `waypoint predictor` from [link](https://drive.google.com/file/d/1goXbgLP2om9LsEQZ5XvB0UpGK4A5SGJC/view?usp=sharing).
 6. Install `torch_kdtree` for K-nearest feature search from [torch_kdtree](https://github.com/thomgrand/torch_kdtree).
    ```
