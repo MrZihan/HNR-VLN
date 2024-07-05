@@ -28,6 +28,9 @@ To this end, some existing works predict RGB images for future environments, whi
 5. Download pre-trained `waypoint predictor` from [link](https://drive.google.com/file/d/1goXbgLP2om9LsEQZ5XvB0UpGK4A5SGJC/view?usp=sharing).
 6. Install `torch_kdtree` for K-nearest feature search from [torch_kdtree](https://github.com/thomgrand/torch_kdtree).
 7. Install `tinycudann` for faster multi-layer perceptrons (MLPs) from [tiny-cuda-nn](https://github.com/NVlabs/tiny-cuda-nn).
+   ```
+   pip3 install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
+   ```
 
 ## Pre-train the HNR model
 
