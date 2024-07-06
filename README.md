@@ -46,7 +46,7 @@ To this end, some existing works predict RGB images for future environments, whi
    ```
 
 ## Evaluate the HNR model
-   Evaluate the cosine similarity between the HNR model's predicted features and the CLIP model's GT features.
+   Evaluate the cosine similarity between the HNR model's predicted features and the CLIP model's ground truth features.
    ```
    bash run_r2r/nerf.bash eval 2345
    ```
