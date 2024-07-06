@@ -65,7 +65,7 @@ import gc
 import clip
 import open3d as o3d
 
-global_num = 0
+Visualization = False
 
 @baseline_registry.register_trainer(name="SS-ETP")
 class RLTrainer(BaseVLNCETrainer):
@@ -1016,7 +1016,6 @@ class RLTrainer(BaseVLNCETrainer):
 
 
             #teacher_actions = self._teacher_action_new(nav_inputs['gmap_vp_ids'], no_vp_left)
-            global global_num
 
             if mode == 'train':
                 for b in range(self.batch_size):
@@ -1097,10 +1096,14 @@ class RLTrainer(BaseVLNCETrainer):
                             loss += policy_net.vln_bert.forward_nerf(scene_memory,(position_dict['x'],position_dict['y'],position_dict['z']), angle,79,224,224,images=view_rgb,depths=view_depth,clip_fts=(clip_fts,subregion_patch_id),is_train=True)
                     
                     
-                    
-                        
+                          
             elif mode == 'eval':
+                global Visualization
                 for b in range(self.batch_size):
+
+                    scene_id = self.envs.current_episodes()[b].scene_id.split('/')[-1][:-4]
+                    episode_id = self.envs.current_episodes()[b].episode_id
+
                     gmap = deepcopy(self.gmaps[b].ghost_real_pos)
                     gmap.update(self.gmaps[b].ghost_real_pos)
 
@@ -1110,7 +1113,6 @@ class RLTrainer(BaseVLNCETrainer):
 
                     
                     for key in selected_nodes:
-                        global_num += 1
                         visulize_rgb = []
                         visulize_x = []
                         visulize_y = []
@@ -1133,70 +1135,69 @@ class RLTrainer(BaseVLNCETrainer):
 
                             view_rgb = camera_obs['rgb']
                             view_depth = camera_obs['depth']
-                    
-                            view_rgb = cv2.resize(view_rgb, (224, 224),  interpolation = cv2.INTER_LINEAR)                      
-                            cv2.imwrite('images/'+str(key)+'_%d_%.4f_gt_rgb.png'%(global_num,angle), policy_net.RGB_to_BGR(view_rgb))
+                            
+                            if Visualization:  
+                                if not os.path.exists("images/"+scene_id):
+                                    os.makedirs("images/"+scene_id)
 
-                            gt_depth = (view_depth * 255.).astype(np.uint8)
-                            gt_depth = cv2.resize(gt_depth, (224, 224), interpolation = cv2.INTER_NEAREST)
-                            gt_depth = cv2.applyColorMap(gt_depth, cv2.COLORMAP_JET)  
-                            cv2.imwrite('images/'+str(key)+'_%d_%.4f_gt_depth.png'%(global_num,angle), gt_depth)
+                                view_rgb = cv2.resize(view_rgb, (224, 224),  interpolation = cv2.INTER_LINEAR)                      
+                                cv2.imwrite('images/'+scene_id+'/'+str(episode_id)+'_'+str(key)+'_%.4f_gt_rgb.png'%(angle), policy_net.RGB_to_BGR(view_rgb))
+
+                                gt_depth = (view_depth * 255.).astype(np.uint8)
+                                gt_depth = cv2.resize(gt_depth, (224, 224), interpolation = cv2.INTER_NEAREST)
+                                gt_depth = cv2.applyColorMap(gt_depth, cv2.COLORMAP_JET)  
+                                cv2.imwrite('images/'+scene_id+'/'+str(episode_id)+'_'+str(key)+'_%.4f_gt_depth.png'%(angle), gt_depth)
                             ##############
 
                             with torch.no_grad():
                                 if self.config.MODEL.task_type == 'r2r':
 
                                     scene_memory = (selected_fts, selected_patch_directions, selected_patch_scales, pcd, pcd_tree, fcd, fcd_tree, occupancy_pcd_tree)
-                            
-                                    predicted_rgb, predicted_depth, predicted_fts = policy_net.vln_bert.forward_nerf(scene_memory,(position_dict['x'],position_dict['y'],position_dict['z']), angle,90,224,224,images=None,depths=None,clip_fts=(None,None),is_train=False)
                                     
+                                    if Visualization: # Render 224x224 RGB and depth images
+                                        predicted_rgb, predicted_depth, predicted_fts = policy_net.vln_bert.forward_nerf(scene_memory,(position_dict['x'],position_dict['y'],position_dict['z']), angle,90,224,224,images=None,depths=None,clip_fts=(None,None),is_train=False)     
+                                    else: # Render 2x2 images for faster speed
+                                        predicted_rgb, predicted_depth, predicted_fts = policy_net.vln_bert.forward_nerf(scene_memory,(position_dict['x'],position_dict['y'],position_dict['z']), angle,90,2,2,images=None,depths=None,clip_fts=(None,None),is_train=False)     
+                                    
+                                    rgb_input = {}
+                                    rgb_input['rgb'] = torch.tensor(np.expand_dims(view_rgb,axis=0)).cuda()
+                                    gt_fts = policy_net.rgb_encoder(rgb_input, fine_grained_fts=False)
+                                    gt_fts = gt_fts / torch.linalg.norm(gt_fts, dim=-1, keepdim=True)
+                                    predicted_fts = predicted_fts[0] / torch.linalg.norm(predicted_fts[0], dim=-1, keepdim=True)                                                        
+                                    sim_score = predicted_fts @ gt_fts.T
+                                    print('ID:'+scene_id+'_'+str(episode_id)+'_'+str(key)+'_%.4f'%(angle),"Cosine similarity:",sim_score.cpu().item())
 
-                                    '''
-                                    visulize_rgb.append(predicted_rgb)
-                                    rel_x, rel_y, rel_z = self.image_get_rel_position(predicted_depth.reshape((-1,)),-angle,'R2R')
-                                    visulize_x.append(rel_x+position_dict['x'])
-                                    visulize_y.append(rel_y+position_dict['y'])
-                                    visulize_z.append(rel_z+position_dict['z'])
+                                    if Visualization:     
+                                        '''
+                                        visulize_rgb.append(predicted_rgb)
+                                        rel_x, rel_y, rel_z = self.image_get_rel_position(predicted_depth.reshape((-1,)),-angle,'R2R')
+                                        visulize_x.append(rel_x+position_dict['x'])
+                                        visulize_y.append(rel_y+position_dict['y'])
+                                        visulize_z.append(rel_z+position_dict['z'])
 
-                                    text = clip.tokenize("The window of the toilet.").to("cuda")
-                                    text_fts = policy_net.rgb_encoder.model.encode_text(text).detach()
-                                    predicted_fts = predicted_fts[1:] / torch.linalg.norm(predicted_fts[1:], dim=-1, keepdim=True)
-                                    text_fts = text_fts / torch.linalg.norm(text_fts, dim=-1, keepdim=True)
-                                    attention_map = (predicted_fts @ text_fts.T - 0.25) * 10.
-                                    attention_map[attention_map<0.] = 0.
-                                    attention_map[attention_map>1.] = 1.
-                                    attention_map = (attention_map.view(8,8).detach().cpu().numpy()* 255.).astype(np.uint8)
-                                    attention_map = cv2.resize(attention_map, (224, 224), interpolation = cv2.INTER_NEAREST)
-                                    heat_img = cv2.applyColorMap(attention_map, cv2.COLORMAP_JET)                                  
-                                    visulize_attention.append(policy_net.RGB_to_BGR(heat_img))
-                                    '''
+                                        text = clip.tokenize("The window of the toilet.").to("cuda")
+                                        text_fts = policy_net.rgb_encoder.model.encode_text(text).detach()
+                                        predicted_fts = predicted_fts[1:] / torch.linalg.norm(predicted_fts[1:], dim=-1, keepdim=True)
+                                        text_fts = text_fts / torch.linalg.norm(text_fts, dim=-1, keepdim=True)
+                                        attention_map = (predicted_fts @ text_fts.T - 0.25) * 10.
+                                        attention_map[attention_map<0.] = 0.
+                                        attention_map[attention_map>1.] = 1.
+                                        attention_map = (attention_map.view(8,8).detach().cpu().numpy()* 255.).astype(np.uint8)
+                                        attention_map = cv2.resize(attention_map, (224, 224), interpolation = cv2.INTER_NEAREST)
+                                        heat_img = cv2.applyColorMap(attention_map, cv2.COLORMAP_JET)                                  
+                                        visulize_attention.append(policy_net.RGB_to_BGR(heat_img))
+                                        '''
 
-                                    cv2.imwrite('images/'+str(key)+'_%d_%.4f_rgb.png'%(global_num,angle), policy_net.RGB_to_BGR(predicted_rgb))
-                                    predicted_depth = (predicted_depth / 10. * 255.).astype(np.uint8)
-                                    predicted_depth = cv2.resize(predicted_depth, (224, 224), interpolation = cv2.INTER_NEAREST)
-                                    cv2.imwrite('images/'+str(key)+'_%d_%.4f_depth.png'%(global_num,angle), predicted_depth)
-                                    predicted_depth = cv2.applyColorMap(predicted_depth, cv2.COLORMAP_JET)  
-                                    cv2.imwrite('images/'+str(key)+'_%d_%.4f_colormap.png'%(global_num,angle), predicted_depth)
-                                    #cv2.imwrite('images/'+str(key)+'_%d_%.4f_heat_img.png'%(global_num,angle), heat_img)
+                                        cv2.imwrite('images/'+scene_id+'/'+str(episode_id)+'_'+str(key)+'_%.4f_predicted_rgb.png'%(angle), policy_net.RGB_to_BGR(predicted_rgb))
+                                        predicted_depth = (predicted_depth / 10. * 255.).astype(np.uint8)
+                                        predicted_depth = cv2.applyColorMap(predicted_depth, cv2.COLORMAP_JET)  
+                                        cv2.imwrite('images/'+scene_id+'/'+str(episode_id)+'_'+str(key)+'_%.4f_predicted_depth.png'%(angle), predicted_depth)
+                                        #cv2.imwrite('images/'+scene_id+'/'+str(episode_id)+'_'+str(key)+'_%.4f_heat_img.png'%(angle), heat_img)
                                     
 
                                 elif self.config.MODEL.task_type == 'rxr':
-
-                                    scene_memory = (selected_fts, selected_patch_directions, selected_patch_scales, pcd, pcd_tree, fcd, fcd_tree, occupancy_pcd_tree)
-                            
-                                    predicted_rgb, predicted_depth, predicted_fts = policy_net.vln_bert.forward_nerf(scene_memory,(position_dict['x'],position_dict['y'],position_dict['z']), angle,79,224,224,images=None,depths=None,clip_fts=(None,None),is_train=False)
-                                    text = clip.tokenize("The image of door.").to("cuda")
-                                    text_fts = policy_net.rgb_encoder.model.encode_text(text).detach()
-                                    predicted_fts = predicted_fts[1:] / torch.linalg.norm(predicted_fts[1:], dim=-1, keepdim=True)
-                                    text_fts = text_fts / torch.linalg.norm(text_fts, dim=-1, keepdim=True)
-                                    attention_map = (predicted_fts @ text_fts.T - 0.25) * 10.
-                                    attention_map[attention_map<0.] = 0.
-                                    attention_map[attention_map>1.] = 1.
-                                    
-                                    attention_map = (attention_map.view(8,8).detach().cpu().numpy()* 255.).astype(np.uint8)
-                                    heat_img = cv2.applyColorMap(attention_map, cv2.COLORMAP_JET) 
-                                    #cv2.imwrite('heat_img.png', heat_img)
-                                    #exit()
+                                    print("Please use the R2R settings to pre-train the HNR model.")
+                                    exit()
                         
                         if key != selected_nodes[-1]:
                             continue
