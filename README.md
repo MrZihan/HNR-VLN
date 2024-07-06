@@ -12,7 +12,7 @@ To this end, some existing works predict RGB images for future environments, whi
 
 * [X] Release the pre-training code of the Hierarchical Neural Radiance Representation Model.
 * [X] Release the checkpoints of the Hierarchical Neural Radiance Representation Model.
-* [ ] Tidy the pre-training code for easy execution.
+* [X] Tidy the pre-training code for easy execution.
 * [ ] Release the fine-tuning code of the Lookahead VLN Model.
 * [ ] Release the checkpoints of the Lookahead VLN Model.
 
@@ -45,8 +45,17 @@ To this end, some existing works predict RGB images for future environments, whi
    bash run_r2r/nerf.bash train 2345
    ```
 
+## Evaluate the HNR model
+   Evaluate the cosine similarity between the HNR model's predicted features and the CLIP model's GT features.
+   ```
+   bash run_r2r/nerf.bash eval 2345
+   ```
+   Set `Visualization` to `True` in line 68 of `HNR-VLN/NeRF/ss_trainer_ETP.py`, visualize and save the images predicted by the HNR model.
+   
 ## Issues
 For training speed, see [Issue#7](https://github.com/MrZihan/HNR-VLN/issues/7)
+
+Load only a few scenes for efficient debugging, see [Issue#4](https://github.com/MrZihan/HNR-VLN/issues/4)
 
 ## Citation
 
