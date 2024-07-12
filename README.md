@@ -16,6 +16,11 @@ To this end, some existing works predict RGB images for future environments, whi
 * [ ] Release the fine-tuning code of the Lookahead VLN Model.
 * [ ] Release the checkpoints of the Lookahead VLN Model.
 
+## Issues
+For training speed, see [Issue#7](https://github.com/MrZihan/HNR-VLN/issues/7)
+
+Load only a few scenes for efficient debugging, see [Issue#4](https://github.com/MrZihan/HNR-VLN/issues/4)
+
 ## Requirements
 
 1. Install `Habitat simulator`: follow instructions from [ETPNav](https://github.com/MarSaKi/ETPNav) and [VLN-CE](https://github.com/jacobkrantz/VLN-CE).
@@ -52,10 +57,6 @@ To this end, some existing works predict RGB images for future environments, whi
    ```
    Set `Visualization` to `True` in line 68 of `HNR-VLN/NeRF/ss_trainer_ETP.py`, visualize and save the images predicted by the HNR model.
    
-## Issues
-For training speed, see [Issue#7](https://github.com/MrZihan/HNR-VLN/issues/7)
-
-Load only a few scenes for efficient debugging, see [Issue#4](https://github.com/MrZihan/HNR-VLN/issues/4)
 
 ## Citation
 
