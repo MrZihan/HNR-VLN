@@ -61,11 +61,13 @@ Load only a few scenes for efficient debugging, see [Issue#4](https://github.com
 ## Citation
 
 ```bibtex
-@inproceedings{wang2024lookahead,
-  title={Lookahead Exploration with Neural Radiance Representation for Continuous Vision-Language Navigation},
-  author={Wang, Zihan and Li, Xiangyang and Yang, Jiahao and Liu, Yeqi and Hu, Junjie and Jiang, Ming and Jiang, Shuqiang},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  year={2024}
+@InProceedings{Wang_2024_CVPR,
+    author    = {Wang, Zihan and Li, Xiangyang and Yang, Jiahao and Liu, Yeqi and Hu, Junjie and Jiang, Ming and Jiang, Shuqiang},
+    title     = {Lookahead Exploration with Neural Radiance Representation for Continuous Vision-Language Navigation},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2024},
+    pages     = {13753-13762}
 }
   ```
 
