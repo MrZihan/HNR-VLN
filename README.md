@@ -13,8 +13,8 @@ To this end, some existing works predict RGB images for future environments, whi
 * [X] Release the pre-training code of the Hierarchical Neural Radiance Representation Model.
 * [X] Release the checkpoints of the Hierarchical Neural Radiance Representation Model.
 * [X] Tidy the pre-training code for easy execution.
-* [ ] Release the fine-tuning code of the Lookahead VLN Model.
-* [ ] Release the checkpoints of the Lookahead VLN Model.
+~~* [ ] Release the fine-tuning code of the Lookahead VLN Model.~~  See the improved model [g3D-LF](https://github.com/MrZihan/g3D-LF).
+~~* [ ] Release the checkpoints of the Lookahead VLN Model.~~  See the improved model [g3D-LF](https://github.com/MrZihan/g3D-LF).
 
 ## Issues
 For training speed, see [Issue#7](https://github.com/MrZihan/HNR-VLN/issues/7)
