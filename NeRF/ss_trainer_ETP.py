@@ -64,7 +64,7 @@ from PIL import Image
 import gc
 import clip
 import open3d as o3d
-
+simulator_episodes = 0
 Visualization = False
 
 @baseline_registry.register_trainer(name="SS-ETP")
@@ -846,6 +846,16 @@ class RLTrainer(BaseVLNCETrainer):
             feedback = 'argmax'
         else:
             raise NotImplementedError
+
+	global simulator_episodes # !!!!!!!!!!!!!!!!
+        simulator_episodes += 1
+        if simulator_episodes % 100 == 0:
+            self.envs.close()
+            self.envs = construct_envs(
+                self.config, 
+                get_env_class(self.config.ENV_NAME),
+                auto_reset_done=False
+            )
 
         self.envs.resume_all()
         observations = self.envs.reset()
