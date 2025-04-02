@@ -347,11 +347,11 @@ class RxRVLNCEDatasetV1_NeRF(Dataset):
                         "data/datasets/pointnav/hm3d/v1/train/content/"+scene_id.split("/")[-1].split(".")[0]+'.json.gz', "rt"
                     ) as f:
                         self.from_json(f.read())
-            else:
-                with gzip.open(
-                        "data/datasets/pointnav/hm3d/v1/val/content/"+scene_id.split("/")[-1].split(".")[0]+'.json.gz', "rt"
-                    ) as f:
-                        self.from_json(f.read())
+            #else:
+            #    with gzip.open(
+            #            "data/datasets/pointnav/hm3d/v1/val/content/"+scene_id.split("/")[-1].split(".")[0]+'.json.gz', "rt"
+            #        ) as f:
+            #            self.from_json(f.read())
             count += 1
             if count == 32:
                 break
