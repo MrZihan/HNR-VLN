@@ -14,7 +14,8 @@ from habitat.tasks.nav.nav import NavigationGoal
 from habitat.tasks.vln.vln import InstructionData, VLNEpisode
 import random
 from tqdm import tqdm
-random.seed(0)
+#random.seed(0)
+import time
 
 DEFAULT_SCENE_PATH_PREFIX = "data/scene_datasets/"
 ALL_LANGUAGES_MASK = "*"
@@ -319,10 +320,14 @@ class RxRVLNCEDatasetV1_NeRF(Dataset):
         return self.episodes
 
     def __init__(self, config: Optional[Config] = None) -> None:
+
+        seed = int(time.time())
+        random.seed(seed)
         
         hm3d_dir = "data/scene_datasets/hm3d"
         scene_ids = os.listdir(os.path.join(hm3d_dir, 'train')) + os.listdir(os.path.join(hm3d_dir, 'val'))
         scene_ids.sort(key=lambda x: int(x.split('-')[0]))
+        random.shuffle(scene_ids)
         for i in range(len(scene_ids)):
             scene_id = scene_ids[i]
             if int(scene_id.split('-')[0]) < 800:
@@ -348,8 +353,8 @@ class RxRVLNCEDatasetV1_NeRF(Dataset):
                     ) as f:
                         self.from_json(f.read())
             count += 1
-            #if count == 5:
-            #    break
+            if count == 32:
+                break
         return None
 
 
@@ -358,6 +363,7 @@ class RxRVLNCEDatasetV1_NeRF(Dataset):
     ) -> None:
 
         deserialized = json.loads(json_str)
+        random.shuffle(deserialized["episodes"])
         for episode in deserialized["episodes"]:
             episode['scene_id'] = 'data/scene_datasets/'+episode['scene_id']
             # The instruction is not needed, just for running the code
